@@ -1,6 +1,6 @@
 from heapq import heappop, heappush
-from collections import deque
-from search import A_Star, BFS
+from collections import defaultdict
+from search import *
 from heuristics import *
 
 # Initial State: All three disks on left most peg in ascending order.
@@ -9,7 +9,7 @@ from heuristics import *
 INITIAL_STATE = ((1, 2, 3), (), ())
 GOAL_STATE = ((), (), (1, 2, 3))
 
-# Defines initial state & legal moves and stores them in a list.
+# Defines legal moves and stores them in a list.
 def legal_moves(state):
     moves = []
 
@@ -31,7 +31,6 @@ def legal_moves(state):
         moves.append((tuple(new_state), (src, dst)))
 
     return moves
-
 
 
 
