@@ -32,6 +32,22 @@ def legal_moves(state):
 
     return moves
 
+while True:
+    current_state = INITIAL_STATE
+    print(INITIAL_STATE)
 
-
-
+    cmd = input("Command: \nBFS \nA* \nSettings \nExit")
+    if cmd.lower() == "BFS":
+        run_bfs(3)
+    elif cmd.lower() == "A*":
+        pass
+    elif cmd.lower() == "Recursion":
+        run_recursion(3, "A", "B", "C")
+    elif cmd.lower() == "Settings":
+        pass
+    elif cmd.lower() == "Exit":
+        break
+    else:
+        print("Command does not exist, please enter a valid command.")
+        continue
+    input("Press enter to continue to the menu.")

@@ -1,15 +1,11 @@
 from hanoi import INITIAL_STATE, GOAL_STATE, legal_moves
 from collections import deque
 
-def A_Star(grid, heuristic):
+def run_a_star(grid, heuristic):
     pass
-    
-
-
-
 
 # BFS solution.
-def BFS(n):
+def run_bfs(n):
     start = INITIAL_STATE
     goal = GOAL_STATE
 
@@ -29,17 +25,15 @@ def BFS(n):
 
     return None
 
-
-
 # Recursive solution.
-def recursion(n, source, target, aux):
+def run_recursion(n, source, target, aux):
     if n == 0:
         return
-    recursion(n -1, source, aux, target)
+    run_recursion(n -1, source, aux, target)
     print("Move disk", n, "from rod", source, "to rod", target)
-    recursion(n - 1, aux, target, source)
+    run_recursion(n - 1, aux, target, source)
 
-recursion(3, "A", "B", "C")
+run_recursion(3, "A", "B", "C")
 
 
 

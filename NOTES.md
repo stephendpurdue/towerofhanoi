@@ -8,3 +8,12 @@ Chosen Algorithms:
 - A* 
 - BFS
 
+Chosen Format:
+
+The game will be displayed on a 3x3 grid, using a 3-tuple state.
+
+TODO:
+
+Implement A*
+Two Heuristics
+Commands
