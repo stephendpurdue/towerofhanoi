@@ -6,5 +6,5 @@ Tests have also been created in order to ensure each algorithm works as expected
 
 #### Requirements:
 
-- Python 3.8 or newer.
+- Python 3.8 or newer.gi
 - No external packages; only Python's standard library is required.
