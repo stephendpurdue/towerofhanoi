@@ -1,5 +1,30 @@
-from hanoi import INITIAL_STATE, GOAL_STATE, legal_moves
 from collections import deque
+
+INITIAL_STATE = ((1, 2, 3), (), ())
+GOAL_STATE = ((), (), (1, 2, 3))
+
+# Defines legal moves and stores them in a list.
+def legal_moves(state):
+    moves = []
+
+    for src in range(3):
+        if not state[src]:
+            continue
+
+    disk = state[src][0]
+    rest = state[src][1:]
+
+    for dst in range(3):
+        if src == dst:
+            continue
+
+    if not state[dst] or disk < state[dst][0]:
+        new_state = list(state)
+        new_state[src] = rest
+        new_state[dst] = (disk,) + state[dst]
+        moves.append((tuple(new_state), (src, dst)))
+
+    return moves
 
 def run_a_star(grid, heuristic):
     pass
@@ -26,14 +51,25 @@ def run_bfs(n):
     return None
 
 # Recursive solution.
-def run_recursion(n, source, target, aux):
+def run_recursion(n, source, target, aux, total_moves=None):
+    if total_moves is None:
+        total_moves = []
+
     if n == 0:
-        return
-    run_recursion(n -1, source, aux, target)
+        return len(total_moves)
+
+    run_recursion(n - 1, source, aux, target, total_moves)
+    move = (n, source, target)
+    total_moves.append(move)
     print("Move disk", n, "from rod", source, "to rod", target)
-    run_recursion(n - 1, aux, target, source)
+    run_recursion(n - 1, aux, target, source, total_moves)
 
-run_recursion(3, "A", "B", "C")
+    print("Total Moves: " {total_moves})
+    return(len(total_moves))
 
+
+
+if __name__ == "__main__":
+    run_recursion(3, "A", "B", "C")
 
 
