@@ -9,11 +9,12 @@ from heuristics import *
 if __name__ == "__main__":
     while True:
         current_state = INITIAL_STATE
-        print(INITIAL_STATE)
+        print("Inital State:", INITIAL_STATE)
+        print("Goal State:", GOAL_STATE)
 
         cmd = input("Command: \nBFS \nA* \nRecursion \nSettings \nExit \nPlease enter a command: ")
         if cmd.lower() == "bfs":
-            run_bfs(3)
+            print_bfs_solution(3)
         elif cmd.lower() == "a*":
             pass
         elif cmd.lower() == "recursion":
