@@ -10,9 +10,8 @@ def legal_moves(state):
     for src in range(3):
         if not state[src]:
             continue
-
-    disk = state[src][0]
-    rest = state[src][1:]
+        disk = state[src][0]
+        rest = state[src][1:]
 
     for dst in range(3):
         if src == dst:
@@ -26,13 +25,21 @@ def legal_moves(state):
 
     return moves
 
+def make_initial_state(n):
+    disks = tuple(range(1, n + 1))
+    return (disks, (), ())
+
+def make_goal_state(n):
+    disks = tuple(range(1, n + 1))
+    return ((), (), disks)
+
 def run_a_star(grid, heuristic):
     pass
 
 # BFS solution.
 def run_bfs(n):
-    start = INITIAL_STATE
-    goal = GOAL_STATE
+    start = make_initial_state(n)
+    goal = make_goal_state(n)
 
     queue = deque([(start, [])])
     visited = {start}
@@ -64,12 +71,10 @@ def run_recursion(n, source, target, aux, total_moves=None):
     print("Move disk", n, "from rod", source, "to rod", target)
     run_recursion(n - 1, aux, target, source, total_moves)
 
-    print("Total Moves: " {total_moves})
-    return(len(total_moves))
-
 
 
 if __name__ == "__main__":
     run_recursion(3, "A", "B", "C")
+    run_bfs(3)
 
 
