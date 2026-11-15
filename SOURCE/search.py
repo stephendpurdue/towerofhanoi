@@ -1,8 +1,5 @@
 from collections import deque
 
-INITIAL_STATE = ((1, 2, 3), (), ())
-GOAL_STATE = ((), (), (1, 2, 3))
-
 # Defines legal moves and stores them in a list.
 def legal_moves(state):
     moves = []
@@ -34,7 +31,62 @@ def make_goal_state(n):
     disks = tuple(range(1, n + 1))
     return ((), (), disks)
 
-def run_a_star(grid, heuristic):
+def run_a_star(n, heuristic): # TODO
+    """ PSEUDOCODE
+
+    start ← make_initial_state(n)
+    goal  ← make_goal_state(n)
+
+    open_set ← priority queue
+    counter ← 0
+
+    g_score ← dictionary with default value infinity
+    g_score[start] ← 0
+
+    parent ← empty dictionary
+    move_used ← empty dictionary
+
+    PUSH (priority = heuristic(start, goal),
+          tie_breaker = counter,
+          state = start)
+          INTO open_set
+
+    WHILE open_set is not empty:
+
+        current ← POP state with lowest priority
+
+        IF current = goal:
+            path ← empty list
+
+            WHILE current ≠ start:
+                APPEND move_used[current] TO path
+                current ← parent[current]
+
+            REVERSE path
+            RETURN path
+
+        FOR each (next_state, move) IN legal_moves(current):
+
+            tentative_g ← g_score[current] + 1
+
+            IF tentative_g < g_score[next_state]:
+
+                parent[next_state] ← current
+                move_used[next_state] ← move
+                g_score[next_state] ← tentative_g
+
+                f_score ← tentative_g + heuristic(next_state, goal)
+
+                counter ← counter + 1
+
+                PUSH (priority = f_score,
+                      tie_breaker = counter,
+                      state = next_state)
+                      INTO open_set
+
+    RETURN None"""
+
+def print_a_star_solution(n): # TODO
     pass
 
 # BFS solution.

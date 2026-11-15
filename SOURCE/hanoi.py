@@ -8,9 +8,10 @@ from heuristics import *
 
 if __name__ == "__main__":
     while True:
-        current_state = INITIAL_STATE
-        print("Inital State:", INITIAL_STATE)
-        print("Goal State:", GOAL_STATE)
+        current_state = make_initial_state(3)
+        goal_state = make_goal_state(3)
+        print("Inital State:", current_state)
+        print("Goal State:", goal_state)
 
         cmd = input("Command: \nBFS \nA* \nRecursion \nSettings \nExit \nPlease enter a command: ")
         if cmd.lower() == "bfs":
