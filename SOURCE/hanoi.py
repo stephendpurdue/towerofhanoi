@@ -1,7 +1,6 @@
 from heapq import heappop, heappush
 from collections import defaultdict
 from search import *
-from heuristics import *
 
 # Initial State: All three disks on left most peg in ascending order.
 # Goal State: All three disks on right most peg in ascending order.
@@ -17,7 +16,7 @@ if __name__ == "__main__":
         if cmd.lower() == "bfs":
             print_bfs_solution(3)
         elif cmd.lower() == "a*":
-            pass
+            print_a_star_solution(3)
         elif cmd.lower() == "recursion":
             run_recursion(3, "A", "B", "C")
         elif cmd.lower() == "settings":

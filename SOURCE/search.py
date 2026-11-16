@@ -1,6 +1,8 @@
 from collections import deque
+from itertools import count
+import heapq
 
-# Defines legal moves and stores them in a list.
+# Helper functions.
 def legal_moves(state):
     moves = []
 
@@ -31,63 +33,85 @@ def make_goal_state(n):
     disks = tuple(range(1, n + 1))
     return ((), (), disks)
 
+# Heuristics
+def admissable_heuristic(state, n):
+
+    # Moving disk k requires first moving the k - 1 smaller disks,
+    # which takes at least 2^(k - 1) - 1 moves.
+    goal_peg = state[2]
+    largest_misplaced = 0
+
+    for disk in range(n):
+        if disk not in goal_peg:
+            largest_misplaced = disk
+
+    if largest_misplaced == 0:
+        return 0
+    
+    return 2 ** (largest_misplaced - 1) - 1
+
+
+def inadmissable_heuristic(state, n):
+
+    # This is not admissible because it can overestimate the remaining moves.
+    goal_peg = state[2]
+    misplaced = sum(1 for disk in range(1, n + 1) if disk not in goal_peg)
+    return misplaced
+
+# A* solution
 def run_a_star(n, heuristic): # TODO
-    """ PSEUDOCODE
 
-    start ← make_initial_state(n)
-    goal  ← make_goal_state(n)
+    start = make_initial_state(3)
+    goal = make_goal_state(3)
 
-    open_set ← priority queue
-    counter ← 0
+    counter = count()
+    h0 = admissable_heuristic(start, n)
+    h1 = inadmissable_heuristic(start, n)
+    open_heap = [(h0, next(counter), 0, start, [])]
+    best = {start: 0}
 
-    g_score ← dictionary with default value infinity
-    g_score[start] ← 0
+    while open_heap:
+        f, _, g, state, path = heapq.heappop(open_heap)
 
-    parent ← empty dictionary
-    move_used ← empty dictionary
+        if state == goal:
+            return path
 
-    PUSH (priority = heuristic(start, goal),
-          tie_breaker = counter,
-          state = start)
-          INTO open_set
+        if g > best.get(state, float("inf")):
+            continue
 
-    WHILE open_set is not empty:
+        for next_state, move in legal_moves(state):
+            next_g = g + 1
 
-        current ← POP state with lowest priority
+            if next_g >= best.get(next_state, float("inf")):
+                continue
 
-        IF current = goal:
-            path ← empty list
+            best[next_state] = next_g
+            h = heuristic(next_state, n)
+            next_path = path + [move]
 
-            WHILE current ≠ start:
-                APPEND move_used[current] TO path
-                current ← parent[current]
-
-            REVERSE path
-            RETURN path
-
-        FOR each (next_state, move) IN legal_moves(current):
-
-            tentative_g ← g_score[current] + 1
-
-            IF tentative_g < g_score[next_state]:
-
-                parent[next_state] ← current
-                move_used[next_state] ← move
-                g_score[next_state] ← tentative_g
-
-                f_score ← tentative_g + heuristic(next_state, goal)
-
-                counter ← counter + 1
-
-                PUSH (priority = f_score,
-                      tie_breaker = counter,
-                      state = next_state)
-                      INTO open_set
-
-    RETURN None"""
+            heapq.heappush(
+                open_heap,
+                (next_g + h, next(counter), next_g, next_state, next_path)
+            )
+    return None
 
 def print_a_star_solution(n): # TODO
-    pass
+    state = make_initial_state(n)
+    path = run_a_star(n, admissable_heuristic)
+    peg_names = ("A", "B", "C")
+
+    print("Initial State:", state)
+
+    for src, dst in path or []:
+        disk = state[src][0]
+        updated_state = list(state)
+        updated_state[src] = state[src][1:]
+        updated_state[dst] = (disk,) + state[dst]
+        state = tuple(updated_state)
+
+        print("Move disk", disk, "from rod", peg_names[src], "to_rod", peg_names[dst])
+
+    print("End State: ", state)
 
 # BFS solution.
 def run_bfs(n):
