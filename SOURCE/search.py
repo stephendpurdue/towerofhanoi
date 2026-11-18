@@ -50,7 +50,6 @@ def admissable_heuristic(state, n):
     
     return 2 ** (largest_misplaced - 1) - 1
 
-
 def inadmissable_heuristic(state, n):
 
     # This is not admissible because it can overestimate the remaining moves.
@@ -58,15 +57,21 @@ def inadmissable_heuristic(state, n):
     misplaced = sum(1 for disk in range(1, n + 1) if disk not in goal_peg)
     return misplaced
 
+def out_of_place_heuristic(state, n):
+    """Estimate remaining work by counting disks off the goal peg."""
+    goal_peg = state[2]
+    return sum(1 for disk in range(1, n + 1) if disk not in goal_peg)
+
+def pdb_heuristic(state, n):
+    pass
 # A* solution
 def run_a_star(n, heuristic): # TODO
 
-    start = make_initial_state(3)
-    goal = make_goal_state(3)
+    start = make_initial_state(n)
+    goal = make_goal_state(n)
 
     counter = count()
-    h0 = admissable_heuristic(start, n)
-    h1 = inadmissable_heuristic(start, n)
+    h0 = heuristic(start, n)
     open_heap = [(h0, next(counter), 0, start, [])]
     best = {start: 0}
 
@@ -136,7 +141,7 @@ def run_bfs(n):
 
 def print_bfs_solution(n):
     state = make_initial_state(n)
-    path = run_bfs(3)
+    path = run_bfs(n)
     peg_names = ("A", "B", "C")
 
     print("Initial State:", state)
@@ -176,5 +181,6 @@ def run_recursion(n, source, target, aux, total_moves=None):
 if __name__ == "__main__":
     run_recursion(3, "A", "B", "C")
     print_bfs_solution(3)
+    print_a_star_solution(3)
 
 

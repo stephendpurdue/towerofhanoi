@@ -12,11 +12,13 @@ if __name__ == "__main__":
         print("Inital State:", current_state)
         print("Goal State:", goal_state)
 
-        cmd = input("Command: \nBFS \nA* \nRecursion \nSettings \nExit \nPlease enter a command: ")
+        cmd = input("Command: \nBFS \nA* \nA* Graph \nRecursion \nSettings \nExit \nPlease enter a command: ")
         if cmd.lower() == "bfs":
             print_bfs_solution(3)
         elif cmd.lower() == "a*":
             print_a_star_solution(3)
+        elif cmd.lower() == "a* graph":
+            print_a_star_graph(3)
         elif cmd.lower() == "recursion":
             run_recursion(3, "A", "B", "C")
         elif cmd.lower() == "settings":

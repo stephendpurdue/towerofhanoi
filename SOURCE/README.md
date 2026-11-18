@@ -51,6 +51,23 @@ SOURCE/
 └── README.md         # Documentation
 ```
 
+#### Runtime Comparison:
+
+The following results compare A* with each heuristic against BFS as the
+number of disks increases. Times are in milliseconds and represent the median
+of seven runs on the same machine.
+
+| Disks (`n`) | A* with h1 (ms) | A* with h2 (ms) | BFS (ms) |
+|---:|---:|---:|---:|
+| 1 | 0.004 | 0.003 | 0.002 |
+| 2 | 0.012 | 0.012 | 0.007 |
+| 3 | 0.040 | 0.038 | 0.027 |
+| 4 | 0.112 | 0.121 | 0.090 |
+| 5 | 0.354 | 0.435 | 0.318 |
+| 6 | 1.048 | 1.506 | 0.999 |
+| 7 | 3.392 | 5.215 | 3.526 |
+| 8 | 11.127 | 18.216 | 12.485 |
+
 #### Startup Guide:
 
 Upon loading the folder, run the program with 'python hanoi.py'. This will open a menu in the command line, each algorithm can be executed with it's respective command (A* / BFS), the output will print to the command line.
